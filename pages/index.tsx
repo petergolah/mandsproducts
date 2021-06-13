@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { IProductListItem } from '../interfaces'
-import { graphqlEndpoint, queryGetProducts } from '../app.config'
+import { graphqlEndpoint, queryGetProducts, currencySymbols } from '../app.config'
 
 export default function Home({ productList }: { productList: IProductListItem[]}) {
     return (
@@ -27,19 +27,22 @@ export default function Home({ productList }: { productList: IProductListItem[]}
 
                 <div className={styles.grid}>
                     { productList.map( (product: IProductListItem, index: number, products: IProductListItem[]) => {
+                        const ccySymbol: string = currencySymbols[product.price.currency_code] || product.price.currency_code
                         return (
                             <a key={product.id} href={`/product/${product.id}`} className={styles.card}>
-                                <h2>{product.name}</h2>
-                                <p>Price {product.price.current_price}</p>
-                                {product.price.original_price &&
-                                    <p>Original price {product.price.original_price}</p>
-                                }
-                                <Image
+                                <Image className={styles.image}
                                     src={`https://asset1.cxnmarksandspencer.com/is/image/mands/${product.image_key}`}
                                     alt={product.name}
                                     width={308}
                                     height={400}
                                 />
+                                <div className={styles.details}>
+                                    <h2>{product.name}</h2>
+                                    <p className={product.price.original_price ? styles.onsale : ''}>{ccySymbol} {(+product.price.current_price / 100).toFixed(2)}</p>
+                                    {product.price.original_price &&
+                                        <p>Original: {ccySymbol} {(+product.price.original_price / 100).toFixed(2)}</p>
+                                    }
+                                </div>
                             </a>
                         )})
                     }
@@ -47,7 +50,7 @@ export default function Home({ productList }: { productList: IProductListItem[]}
             </main>
 
             <footer className={styles.footer}>
-                &copy; PGO
+                <a href="https://github.com/petergolah/mandsproducts" target="_blank">&copy; PGO</a>
             </footer>
         </div>
     )

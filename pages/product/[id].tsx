@@ -20,6 +20,7 @@ export default function ProductPage({ product }: { product: IProduct } ) {
                 <meta name="msapplication-TileColor" content="#da532c" />
                 <meta name="theme-color" content="#ffffff" />
             </Head>
+
             <main className={styles.main}>
                 <button onClick={() => router.back()}>Back</button>
                 <h1 className={styles.title}>
@@ -27,6 +28,10 @@ export default function ProductPage({ product }: { product: IProduct } ) {
                     {product.name}
                 </h1>
             </main>
+
+            <footer className={styles.footer}>
+                <a href="https://github.com/petergolah/mandsproducts" target="_blank">&copy; PGO</a>
+            </footer>
         </div>
     )
 }

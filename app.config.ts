@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client'
+import { DocumentNode, gql } from '@apollo/client'
 
-export const graphqlEndpoint = 'http://localhost:3001/graphql'
+export const graphqlEndpoint: string = 'http://localhost:3001/graphql'
 
-export const queryGetProducts = gql`
+export const queryGetProducts: DocumentNode = gql`
     query getProducts {
         productList {
             id
@@ -17,7 +17,7 @@ export const queryGetProducts = gql`
     }
 `
 
-export const queryGetProduct = gql`
+export const queryGetProduct: DocumentNode = gql`
     query getProduct($id: String!) {
         product(id: $id) {
             id
@@ -36,3 +36,9 @@ export const queryGetProduct = gql`
         }
     }
 `
+
+export const currencySymbols: { [key: string]: string } = {
+    GBP: '£',
+    USD: '$',
+    JPY: '¥',
+}
