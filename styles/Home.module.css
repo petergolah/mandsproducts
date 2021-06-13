@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .main {
@@ -74,7 +73,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 80%;
   margin-top: 3rem;
 }
 
@@ -113,9 +112,12 @@
   margin-left: 0.5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 820px) {
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+  .card {
+    width: initial;
   }
 }
