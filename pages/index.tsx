@@ -2,10 +2,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { IProductListItem } from '../interfaces'
-import { graphqlEndpoint, queryGetProducts, currencySymbols } from '../app.config'
+import { IProductListItem, IUserOffers } from '../interfaces'
+import { testUserId, graphqlEndpoint, queryGetProducts, currencySymbols, queryGetUserOffers } from '../app.config'
+import { getBadge } from '../lib'
 
-export default function Home({ productList }: { productList: IProductListItem[]}) {
+export default function Home({ productList, userOffers }: { productList: IProductListItem[], userOffers: IUserOffers }) {
+    console.log(productList)
+    console.log(userOffers)
     return (
         <div className={styles.container}>
             <Head>
@@ -22,12 +25,14 @@ export default function Home({ productList }: { productList: IProductListItem[]}
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Product List
+                    M&S Collection
                 </h1>
 
                 <div className={styles.grid}>
                     { productList.map( (product: IProductListItem, index: number, products: IProductListItem[]) => {
-                        const ccySymbol: string = currencySymbols[product.price.currency_code] || product.price.currency_code
+                        const ccySymbol: string = currencySymbols[product.price.currency_code] || `${product.price.currency_code} `
+                        const badge: string = getBadge(product.offer_ids, userOffers.available_badges, userOffers.offers)
+                        // console.log(badge)
                         return (
                             <a key={product.id} href={`/product/${product.id}`} className={styles.card}>
                                 <Image className={styles.image}
@@ -38,10 +43,11 @@ export default function Home({ productList }: { productList: IProductListItem[]}
                                 />
                                 <div className={styles.details}>
                                     <h2>{product.name}</h2>
-                                    <p className={product.price.original_price ? styles.onsale : ''}>{ccySymbol} {(+product.price.current_price / 100).toFixed(2)}</p>
+                                    <p className={product.price.original_price ? styles.onsale : ''}>{ccySymbol}{(+product.price.current_price / 100).toFixed(2)}</p>
                                     {product.price.original_price &&
-                                        <p>Original: {ccySymbol} {(+product.price.original_price / 100).toFixed(2)}</p>
+                                        <p>Original: {ccySymbol}{(+product.price.original_price / 100).toFixed(2)}</p>
                                     }
+                                    <img className={styles.badge} src={badge ? `/${badge}_icon.jpg`: ''} />
                                 </div>
                             </a>
                         )})
@@ -63,8 +69,16 @@ export async function getServerSideProps() {
     })
 
     const { data: { productList = []} } = await client.query({ query: queryGetProducts })
+    const { data: { user: userOffers = {}} } = await client.query(
+        {
+            query: queryGetUserOffers,
+            variables: {
+                id: String(testUserId)
+            }
+        }
+    )
 
     return {
-        props: { productList }
+        props: { productList, userOffers }
     }
 }

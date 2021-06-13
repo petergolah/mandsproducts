@@ -96,12 +96,16 @@
     vertical-align: top;
 }
 
-.card .details .onsale {
-    color: orangered;
-}
-
 .image {
     display: inline-block;
+}
+
+.badge {
+    padding: 10px;
+}
+
+.onsale {
+    color: orangered;
 }
 
 @media (max-width: 820px) {
