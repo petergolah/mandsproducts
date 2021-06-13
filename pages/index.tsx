@@ -7,8 +7,6 @@ import { testUserId, graphqlEndpoint, queryGetProducts, currencySymbols, queryGe
 import { getBadge } from '../lib'
 
 export default function Home({ productList, userOffers }: { productList: IProductListItem[], userOffers: IUserOffers }) {
-    console.log(productList)
-    console.log(userOffers)
     return (
         <div className={styles.container}>
             <Head>
@@ -32,7 +30,6 @@ export default function Home({ productList, userOffers }: { productList: IProduc
                     { productList.map( (product: IProductListItem, index: number, products: IProductListItem[]) => {
                         const ccySymbol: string = currencySymbols[product.price.currency_code] || `${product.price.currency_code} `
                         const badge: string = getBadge(product.offer_ids, userOffers.available_badges, userOffers.offers)
-                        // console.log(badge)
                         return (
                             <a key={product.id} href={`/product/${product.id}`} className={styles.card}>
                                 <Image className={styles.image}
