@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../../styles/ProductPage.module.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { IProduct, IUserOffers } from '../../interfaces'
+import { IProduct, IUserOffers } from '../../lib/interfaces'
 import { testUserId, graphqlEndpoint, queryGetProduct, queryGetUserOffers, currencySymbols } from '../../app.config'
-import { getBadge } from '../../lib'
+import { getBadge } from '../../lib/lib'
 
 export default function ProductPage({ product, userOffers }: { product: IProduct, userOffers: IUserOffers } ) {
     const ccySymbol: string = currencySymbols[product.price.currency_code] || `${product.price.currency_code} `

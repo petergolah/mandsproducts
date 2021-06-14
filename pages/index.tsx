@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
-import { IProductListItem, IUserOffers } from '../interfaces'
+import { IProductListItem, IUserOffers } from '../lib/interfaces'
 import { testUserId, graphqlEndpoint, queryGetProducts, currencySymbols, queryGetUserOffers } from '../app.config'
-import { getBadge } from '../lib'
+import { getBadge } from '../lib/lib'
 
 export default function Home({ productList, userOffers }: { productList: IProductListItem[], userOffers: IUserOffers }) {
     return (
