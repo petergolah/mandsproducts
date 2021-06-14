@@ -1,0 +1,14 @@
+version: "3"
+services:
+    mandsproducts:
+        build: .
+        ports:
+            - "3000:3000"
+        network_mode: "host"
+    mandsmockgraphqlapi:
+        image: "chrismns/tech-test-mock-server:0.1.0"
+        expose:
+            - "3001"
+        ports:
+            - "3001:3001"
+        network_mode: "host"
