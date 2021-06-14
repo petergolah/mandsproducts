@@ -18,3 +18,7 @@ $ docker-compose up
 ```
 
 When built UI app runs at `http://localhost:3000`
+
+## Tests
+
+Basic Jest config files and a sample test are added but Jest dependencies are missing. They would have issues with the default install.
