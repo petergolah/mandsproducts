@@ -21,4 +21,9 @@ When built UI app runs at `http://localhost:3000`
 
 ## Tests
 
-Basic Jest config files and a sample test are added but Jest dependencies are missing. They would have issues with the default install.
+Basic Jest config files and a sample test are added but something is not right with the dependencies.
+Last set of dev dependencies I tried is this:
+```
+yarn add -D jest jest-dom @testing-library/react @testing-library/jest-dom @testing-library/dom babel-jest identity-obj-proxy
+```
+This would be the next to sort out.
